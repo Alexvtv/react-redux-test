@@ -1,0 +1,132 @@
+.tasks-page {
+	font-family: 'Roboto', sans-serif;
+	.tasks-list {
+		overflow-x: hidden;
+		width: 100%;
+		height: calc(100vh - 65px);
+		button {
+			margin: 20px 0 0 300px;
+		}
+		.task-unit {
+			cursor: pointer;
+			border-bottom: 1px solid #eef1f4;
+		}
+		.tasks-list-params {
+			font-weight: 500;
+			border-bottom: 1px solid #dae0e7;
+			&>div {
+				&>div {
+					padding-left: 0;
+					p {
+						padding-left: 24px;
+						border-left: 1px solid #e2e7ea;
+					}
+				}
+			}
+		}
+		.task-unit-wrapped {
+			height: 55px;
+			width: 1450px;
+			&>div {
+				margin: auto 0;
+				p {
+					padding-left: 12px;
+				}
+			}
+			.task-status {
+				text-align: center;
+				padding: 0 4px 0 12px;
+				p {
+					border-radius: 13px;
+					font-size: 13px;
+					color: #fff;
+					padding: 3px 12px 1px 12px;
+					height: 25px;
+				}
+			}
+			.task-id {
+				position: relative;
+				div {
+					position: absolute;
+					border-radius: 2px;
+					top: -15px;
+					left: 2px;
+					width: 4px;
+					height: 50px;
+				}
+				p {
+					margin-left: 24px;
+				}
+			}
+			.task-param-id {
+				text-align: center;
+				p {
+					border-left: 0;
+				}
+			}
+			p {
+				line-height: 20px;
+				text-overflow: ellipsis;
+				overflow: hidden; 
+				max-height: 41px;
+				margin: 0;
+			}
+		}
+	}
+
+	.search-panel {
+		height: 65px;
+		background-color: #d1e0ed;
+		p {
+			position: relative;
+			top: 12px;
+			padding-left: 30px;
+			height: 40px;
+			input {
+				padding: 0 20px;
+				width: 680px;
+				height: 100%;
+				border-radius: 20px;
+				border: 1px solid #42aaff;
+			}
+			input::placeholder {
+				color: #c5cfdd;
+			}
+			img {
+				position: relative;
+				right: 30px;
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 991px) {
+	.tasks-page {
+		.tasks-list {
+			overflow-x: auto;
+		}
+		.search-panel {
+			p {
+				input {
+					padding-right: 50px;
+					width: 390px;
+				}
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 575px) {
+	.tasks-page {
+		.search-panel {
+			p {
+				input {
+					width: 150px;
+				}
+				input::placeholder {
+					color: #fff;
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,22 @@
+.navigation {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	width: 93px;
+	background-color: #002137;
+	.link {
+		padding-top: 15px;
+		font-size: 13px;
+		box-sizing: border-box;
+		height: 69px;
+		color: #fff;
+		width: 93px;
+		text-align: center;
+	}
+	.link.link__home {
+		height: 81px;
+	}
+	.active-link {
+		background-color: #002c49;
+	}
+}

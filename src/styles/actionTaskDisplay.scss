@@ -1,0 +1,270 @@
+.action-task-menu {
+	position: absolute;
+	right: 0;
+	width: 976px;
+	top: 65px;
+	height: calc(100vh - 65px);
+	overflow: auto;
+	background-color: #ecf3f7;
+	.action-task-menu-title {
+		min-height: 30px;
+		max-height: 80px;
+		overflow: hidden;
+		padding: 14px 0;
+		position: relative;
+		z-index: 4;
+		background-color: #1a4876;
+		color: #fff;
+		.title-id {
+			position: absolute;
+			top: calc(50% - 11px);
+			left: 30px;
+		}
+		img {
+			position: absolute;
+			top: calc(50% - 13px);
+			right: 30px;
+			padding: 5px;
+			cursor: pointer;
+		}
+		.title-name {
+			position: relative;
+			width: 570px;
+			margin: 0 auto;
+			line-height: 19px;
+		}
+	}
+	.row {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		.task-menu-main {
+			position: relative;
+			top: 0;
+			border-right: 1px solid #d7dce0;
+			border-left: 1px solid #d7dce0;
+			padding: 100px 0 0 37px;
+			.task-menu-description {
+				margin-bottom: 40px;
+			}
+			.create-comment {
+				textarea {
+					width: 500px;
+					height: 85px;
+				}
+			}
+			.comment {
+				margin-top: 60px;
+				&>div:first-child {
+					position: relative;
+					.comment-avatar {
+						position: absolute;
+						width: 39px;
+						height: 39px;
+						background: #f5f5f5;
+						border: 1px solid #c9d1d7;
+						border-radius: 50%;
+					}
+					.comment-data {
+						color: #525460;
+						padding-top: 5px;
+						margin-left: 50px;
+						.comment-name {
+							margin: 0;
+						}
+						.comment-date {
+							font-size: 12px;
+						}
+					}
+				}
+				.comment-content {
+					background-color: #e3e9f4;
+					box-shadow: 0 0 2px #b3b3b3;
+					padding: 8px 12px;
+					width: 590px;
+					margin-left: 50px;
+					border-radius: 6px;
+					margin-bottom: 8px;
+				}
+			}
+		}
+		.task-menu-side {
+			padding: 100px 0 0 25px;
+			&>div {
+				margin-bottom: 30px;
+				select {
+					border-radius: 10px;
+					border: 1px solid #008cf0;
+					padding: 5px;
+					width: 200px;
+				}
+			}
+			.side-status {
+				position: relative;
+				select {
+					margin-left: 20px;
+				}
+				&>div {
+					position: absolute;
+					top: 11px;
+					left: 0;
+					width: 11px;
+					height: 11px;
+					border-radius: 50%;
+				}
+			}
+			.side-date {
+				img {
+					position: relative;
+					top: -2px;
+					margin-right: 3px;
+				}
+			}
+			.side-tags {
+				.side-tag {
+					font-size: 12px;
+					display: inline-block;
+					padding: 1px 10px;
+					border-radius: 10px;
+					margin-right: 10px;
+					border: 1px solid #9da1aa;
+					color: #9da1aa;
+					background-color: #ffffff;
+				}
+			}
+		}
+	}
+	.clarification {
+		color: #aaabb3;
+		font-size: 14px;
+		margin-bottom: 8px;
+	}
+}
+.action-task-menu.create-task {
+	.action-task-menu-title {
+		padding: 20px 0;
+		.title-name {
+			margin: 0 0 0 40px;
+		}
+	}
+	.task-menu-main {
+		padding-top: 40px;
+		.new-task-content {
+			padding-left: 25px;
+			margin-bottom: 20px;
+			textarea {
+				width: 620px;
+				height: 85px;
+				border: 1px solid #e8e8e8;
+			}
+		}	
+		.new-task-description {
+			textarea {
+				height: 130px;
+			}
+		}
+		button {
+			margin: 40px 0 0 25px;
+		}
+	}
+}
+
+@media screen and (max-width: 1069px) {
+	.action-task-menu {
+		width: calc(100%);
+		.action-task-menu-title {
+			.title-name {
+				width: 340px;
+				padding-left: 35px;
+			}
+		}
+		.row {
+			.task-menu-main {
+				.create-comment {
+					textarea {
+						width: 300px;
+					}
+				}
+				.comment {
+					.comment-content {
+						width: 300px;
+					}
+				}
+			}
+		}
+	}
+	.action-task-menu.create-task {
+		overflow: hidden;
+		.action-task-menu-title {
+			.title-name {
+				margin: 0 0 0 10px;
+			}
+		}
+		.task-menu-main {
+			.new-task-content {
+				textarea {
+					width: 400px;
+				}
+			}	
+		}
+	}
+}
+
+@media screen and (max-width: 767px) {
+	.action-task-menu.action-task-menu-view {
+		.row {
+			.task-menu-main {
+				border: 0;
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 575px) {
+	.action-task-menu.action-task-menu-view {
+		.action-task-menu-title {
+			overflow: visible;
+			.title-name {
+				color: #1a4876;
+				position: absolute;
+				top: 70px;
+				width: 220px;
+				padding-left: 35px;
+			}
+		}
+		.row {
+			.task-menu-main {
+				top: 120px;
+				.create-comment {
+					textarea {
+						width: 180px;
+						height: 100px;
+					}
+				}
+				.comment {
+					.comment-content {
+						display: none;
+					}
+				}
+			}
+			.task-menu-side {
+				display: none;
+			}
+		}
+	}
+	.action-task-menu.create-task {
+		overflow: hidden;
+		.action-task-menu-title {
+			.title-name {
+				margin: 0 0 0 10px;
+			}
+		}
+		.task-menu-main {
+			.new-task-content {
+				textarea {
+					width: 170px;
+				}
+			}	
+		}
+	}
+}

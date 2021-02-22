@@ -1,0 +1,18 @@
+.commonPage {
+	.main {
+		position: relative;
+		width: calc(100vw - 93px);
+		left: 93px;
+	}
+	.standart-button {
+		background-color: #008cf0;
+		transition: 0.3s background-color;
+		border: 0;
+		border-radius: 20px;
+		padding: 6px 25px;
+		color: #fff;
+	}
+	.standart-button:hover {
+		background-color: #0077cc;
+	}
+}
