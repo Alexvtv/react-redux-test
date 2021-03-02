@@ -1,69 +1,42 @@
 import { useState, useEffect } from 'react'
 import { connect } from "react-redux"
 
+import { loadTasks } from "../redux/actions"
+
 import '../styles/actionTaskDisplay.scss'
 
 function TaskView(props) {
 
-	const currentTask = props.data.tasks.find(task => task.id === props.selectedId)
+	const [comment, setComment] = useState('') 
+	const [currentTask, setCurrentTask] = useState(props.data.tasks.find(task => task.id === props.selectedId))
+	
+	useEffect(() => {
+		fetch(`http://intravision-task.test01.intravision.ru/api/6581f395-5d65-4960-84f2-2ce6cd6dda13/Tasks/${props.selectedId}`)
+  		.then((response) => {
+  		  return response.json()
+  		})
+  		.then((data) => {
+  		  setCurrentTask(data)
+  		})
+	}, [props.selectedId])
 
-  const [changes, setChanges] = useState( {statusId: false, executorId: false, comment: ''} ) 
 
-	const createChanges = (type, value) => {
+	const sendChanges = async (type, value) => {
 
-		const changesCopy = {...changes}
-		type === 'comment' ? changesCopy[type] = value : changesCopy[type] = Number(value)
-		setChanges(changesCopy)
-
-	}
-
-	const sendChanges = async () => {
-
-		let body = {}
-
-		body.id = currentTask.id
-
-		// Проверяем изменения в объекте changes
-
-		if(changes.statusId !== false) {
-
-			let newStatus = props.data.statuses.find(status => status.id === changes.statusId)
-			let {id, name, rgb} = newStatus
-
-			body.statusId = id
-			body.statusName = name
-			body.statusRgb = rgb
-
-		} else {
-
-			let {statusId, statusName, statusRgb} = currentTask
-			
-			body.statusId = statusId
-			body.statusName = statusName
-			body.statusRgb = statusRgb
-
+		let body = {
+			id: currentTask.id,
+			statusId: currentTask.statusId,
+			executorId: currentTask.executorId
 		}
 
-		if(changes.executorId !== false) {
-
-			let newExecutor = props.data.users.find(user => user.id === changes.executorId)
-			let {id, name} = newExecutor
-
-			body.executorId = id
-			body.executorName = name
-
-		} else {
-
-			let {executorId, executorName} = currentTask
-			
-			body.executorId = executorId
-			body.executorName = executorName
-
-		}
-
-		if (changes.comment.length > 0) {
-			body.comment = changes.comment
-		}
+		if(type === 'lifetimeItems') {
+  		body.comment = value
+  		setComment('')
+		} else if(type === 'statusId') {
+  		body.statusId = value
+  	} else if(type === 'executorId') {
+  		body.executorId = value
+  	}
 
 		let res = await fetch('http://intravision-task.test01.intravision.ru/api/6581f395-5d65-4960-84f2-2ce6cd6dda13/Tasks', {
 		  method: 'PUT',
@@ -74,28 +47,47 @@ function TaskView(props) {
 		})
 
 		if(!!res.ok) {
-			setTimeout(() => window.location.reload())
+			fetch(`http://intravision-task.test01.intravision.ru/api/6581f395-5d65-4960-84f2-2ce6cd6dda13/Tasks/${props.selectedId}`)
+  			.then((response) => {
+  			  return response.json()
+  			})
+  			.then((data) => {
+  			  setCurrentTask(data)
+  			  let modifiedArr = [...props.data.tasks]
+  			  modifiedArr.find(task => task.id === props.selectedId).statusId = data.statusId
+  			  modifiedArr.find(task => task.id === props.selectedId).executorId = data.executorId
+  			  props.dispatch(loadTasks(modifiedArr))
+  			})
+
+
 		} else {
 			console.log(res.statusText)
 		}
 	}
 
-	const comment = () => {
+	const comments = () => {
 
-		if((currentTask.comment !== undefined) && (currentTask.comment.length > 0)) {
-			return (
-				<div className='comment'>
-					<div>
-						<div className='comment-avatar'>
+		if(currentTask.lifetimeItems !== undefined) {
+			return currentTask.lifetimeItems.filter(item => item.lifetimeType !== 30).map(comment => {
+
+				let date = new Date(comment.createdAt)
+				let month = date.toLocaleString("ru", {month: 'long'})
+				let dateResult = `${date.getUTCDate()} ${month}, ${('0' + String(date.getHours())).slice(-2)}:${('0' + String(date.getMinutes())).slice(-2)} прокомменировал`
+
+				return (
+					<div className='comment' key={comment.id}>
+						<div>
+							<div className='comment-avatar'>
+							</div>
+							<div className='comment-data'>
+								<p className='comment-name'>{ props.data.users[0].name}</p>
+								<p className='comment-date'>{ dateResult }</p>
+							</div>
 						</div>
-						<div className='comment-data'>
-							<p className='comment-name'>name surname</p>
-							<p className='comment-date'>date</p>
-						</div>
+						<p className='comment-content'>{ comment.comment }</p>
 					</div>
-					<p className='comment-content'>{ '123' }</p>
-				</div>
-			)
+				)
+			})
 		}
 	}
 
@@ -127,29 +119,17 @@ function TaskView(props) {
 	}
 
   return (
-    <div className='action-task-menu action-task-menu-view'>
+    <div className='action-task-menu action-task-menu-view col-12 col-md-7 col-xl-6'>
       <div className='action-task-menu-title'>
       	<p className='title-id'>№ { currentTask.id }</p>
       	<p className='title-name'>{ currentTask.name }</p>
       	<img src='/icons/close.png' onClick={() => props.selectTask(null)} />
       </div>
-      <div className='row col-12'>
-      	<div className='col-12 col-md-8 col-lg-9 task-menu-main'>
-      		<div className='task-menu-description'>
-      			<p className='clarification'>Описание</p>
-            <span dangerouslySetInnerHTML={{__html: currentTask.description }} />
-      		</div>
-      		<div className='create-comment'>
-      			<p className='clarification'>добавление комментариев</p>
-      			<p><textarea value={changes.comment} onChange={(event) => createChanges('comment', event.target.value)} /></p>
-      			<button className='standart-button' onClick={sendChanges}>Сохранить</button>
-      		</div>
-      		{ comment() }
-      	</div>
-      	<div className='col-12 col-md-4 col-lg-3 task-menu-side'>
+      <div className='col-12'>
+      	<div className='task-menu-side'>
       		<div className='side-status'>
       			<div style={{background: currentTask.statusRgb}}></div>
-      			<select value={changes.statusId || currentTask.statusId} onChange={(event) => createChanges('statusId', event.target.value)}>
+      			<select value={currentTask.statusId} onChange={(event) => sendChanges('statusId', event.target.value)}>
       				{ displayOptions('statuses') }
       			</select>
       		</div>
@@ -159,7 +139,7 @@ function TaskView(props) {
       		</div>
       		<div className='side-executor'>
       			<p className='clarification'>Исполнитель</p>
-      			<select value={changes.executorId || currentTask.executorId} onChange={(event) => createChanges('executorId', event.target.value)}>
+      			<select value={currentTask.executorId} onChange={(event) => sendChanges('executorId', event.target.value)}>
       				{ displayOptions('users') }
       			</select>
       		</div>
@@ -177,6 +157,18 @@ function TaskView(props) {
       				return <p className='side-tag' key={tag.id}>{tag.name}</p>
       			})}
       		</div>
+      	</div>
+      	<div className='task-menu-main'>
+      		<div className='task-menu-description'>
+      			<p className='clarification'>Описание</p>
+            <span dangerouslySetInnerHTML={{__html: currentTask.description }} />
+      		</div>
+      		<div className='create-comment'>
+      			<p className='clarification'>добавление комментариев</p>
+      			<p><textarea value={comment} onChange={(event) => setComment(event.target.value)} /></p>
+      			<button className='standart-button' onClick={() => sendChanges('lifetimeItems', comment)}>Сохранить</button>
+      		</div>
+      			{ comments() }
       	</div>
       </div>
     </div>

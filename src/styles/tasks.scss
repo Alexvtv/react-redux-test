@@ -1,19 +1,23 @@
 .tasks-page {
 	font-family: 'Roboto', sans-serif;
 	.tasks-list {
-		overflow-x: hidden;
-		width: 100%;
+		position: relative;
+		overflow-y: auto;
 		height: calc(100vh - 65px);
+		&>div {
+			position: relative;
+			width: 100%;
+		}
 		button {
 			margin: 20px 0 0 300px;
 		}
 		.task-unit {
+			width: 100%;
+			padding-left: 2px;
 			cursor: pointer;
-			border-bottom: 1px solid #eef1f4;
 		}
 		.tasks-list-params {
 			font-weight: 500;
-			border-bottom: 1px solid #dae0e7;
 			&>div {
 				&>div {
 					padding-left: 0;
@@ -26,21 +30,30 @@
 		}
 		.task-unit-wrapped {
 			height: 55px;
-			width: 1450px;
+			width: 1000px;
+			hr {
+				position: absolute;
+				margin: 0;
+				min-width: 1000px;
+				width: 99.8%;
+			}
 			&>div {
 				margin: auto 0;
 				p {
-					padding-left: 12px;
+					padding-left: 20px;
 				}
 			}
 			.task-status {
 				text-align: center;
 				padding: 0 4px 0 12px;
 				p {
+					width: 110px;
+					display: block;
+					margin: 0 auto;
 					border-radius: 13px;
 					font-size: 13px;
 					color: #fff;
-					padding: 3px 12px 1px 12px;
+					padding: 3px 0 1px 0;
 					height: 25px;
 				}
 			}

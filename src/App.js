@@ -32,7 +32,6 @@ function App({ dispatch }) {
       dataArr.priorities = await priorities.json()
       dataArr.statuses = await statuses.json()
       dataArr.users = await users.json()
-
       dispatch(saveData(dataArr))
 
     }).catch((err) => {

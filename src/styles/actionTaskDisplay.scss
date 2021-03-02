@@ -1,14 +1,14 @@
 .action-task-menu {
+	padding: 0;
 	position: absolute;
 	right: 0;
-	width: 976px;
 	top: 65px;
 	height: calc(100vh - 65px);
 	overflow: auto;
 	background-color: #ecf3f7;
 	.action-task-menu-title {
+		width: 100%;
 		min-height: 30px;
-		max-height: 80px;
 		overflow: hidden;
 		padding: 14px 0;
 		position: relative;
@@ -29,32 +29,34 @@
 		}
 		.title-name {
 			position: relative;
-			width: 570px;
+			width: 230px;
 			margin: 0 auto;
 			line-height: 19px;
 		}
 	}
-	.row {
-		position: absolute;
+	&>.col-12 {
+		position: relative;
 		top: 0;
 		bottom: 0;
 		.task-menu-main {
+			height: 100%;
+			min-height: calc(100vh - 115px);
+			width: calc(100% - 265px);
 			position: relative;
 			top: 0;
 			border-right: 1px solid #d7dce0;
-			border-left: 1px solid #d7dce0;
-			padding: 100px 0 0 37px;
+			padding: 30px 25px 0 20px;
 			.task-menu-description {
 				margin-bottom: 40px;
 			}
 			.create-comment {
 				textarea {
-					width: 500px;
+					width: 100%;
 					height: 85px;
 				}
 			}
 			.comment {
-				margin-top: 60px;
+				margin: 50px 0 20px 0;
 				&>div:first-child {
 					position: relative;
 					.comment-avatar {
@@ -81,15 +83,18 @@
 					background-color: #e3e9f4;
 					box-shadow: 0 0 2px #b3b3b3;
 					padding: 8px 12px;
-					width: 590px;
-					margin-left: 50px;
+					width: 80%;
 					border-radius: 6px;
-					margin-bottom: 8px;
+					margin: -6px 0 8px 50px;
 				}
 			}
 		}
 		.task-menu-side {
-			padding: 100px 0 0 25px;
+			position: absolute;
+			top: 0;
+			right: 0;
+			width: 265px;
+			padding: 30px 0 0 15px;
 			&>div {
 				margin-bottom: 30px;
 				select {
@@ -150,10 +155,10 @@
 	.task-menu-main {
 		padding-top: 40px;
 		.new-task-content {
-			padding-left: 25px;
+			padding: 0 25px;
 			margin-bottom: 20px;
 			textarea {
-				width: 620px;
+				width: 100%;
 				height: 85px;
 				border: 1px solid #e8e8e8;
 			}
@@ -169,102 +174,94 @@
 	}
 }
 
+@media screen and (max-width: 1400px) {
+	.action-task-menu {
+		&>.col-12 {
+			.task-menu-main {
+				width: calc(100% - 215px);
+				.comment {
+					.comment-content {
+						width: 100%;
+						margin-left: 0px;
+					}
+				}
+			}
+			.task-menu-side {
+				width: 215px;
+				&>div {
+					select {
+						width: 150px;
+					}
+				}
+			}
+		}
+	}
+}
+
 @media screen and (max-width: 1069px) {
 	.action-task-menu {
 		width: calc(100%);
 		.action-task-menu-title {
 			.title-name {
-				width: 340px;
-				padding-left: 35px;
+				width: 170px;
 			}
 		}
-		.row {
+		&>.col-12 {
 			.task-menu-main {
-				.create-comment {
-					textarea {
-						width: 300px;
-					}
-				}
+				min-height: 0;
+				width: 100%;
+				border: 0;
 				.comment {
 					.comment-content {
-						width: 300px;
+						width: 80%;
+						margin-left: 50px;
 					}
 				}
 			}
-		}
-	}
-	.action-task-menu.create-task {
-		overflow: hidden;
-		.action-task-menu-title {
-			.title-name {
-				margin: 0 0 0 10px;
-			}
-		}
-		.task-menu-main {
-			.new-task-content {
-				textarea {
-					width: 400px;
+			.task-menu-side {
+				margin: 30px auto 0 auto;
+				position: relative;
+				width: 255px;
+				&>div {
+					select {
+						width: 200px;
+					}
 				}
-			}	
-		}
-	}
-}
-
-@media screen and (max-width: 767px) {
-	.action-task-menu.action-task-menu-view {
-		.row {
-			.task-menu-main {
-				border: 0;
 			}
 		}
 	}
 }
 
 @media screen and (max-width: 575px) {
-	.action-task-menu.action-task-menu-view {
+	.action-task-menu-view {
 		.action-task-menu-title {
-			overflow: visible;
 			.title-name {
-				color: #1a4876;
-				position: absolute;
-				top: 70px;
-				width: 220px;
-				padding-left: 35px;
+				margin-top: 40px;
+				width: 90%;
+			}
+			.title-id {
+				top: 20px;
+			}
+			img {
+				top: 20px;
 			}
 		}
-		.row {
+		&>.col-12 {
 			.task-menu-main {
-				top: 120px;
-				.create-comment {
-					textarea {
-						width: 180px;
-						height: 100px;
-					}
-				}
 				.comment {
 					.comment-content {
-						display: none;
+						width: 110%;
+						margin-left: 0px;
 					}
 				}
 			}
 			.task-menu-side {
-				display: none;
-			}
-		}
-	}
-	.action-task-menu.create-task {
-		overflow: hidden;
-		.action-task-menu-title {
-			.title-name {
-				margin: 0 0 0 10px;
-			}
-		}
-		.task-menu-main {
-			.new-task-content {
-				textarea {
-					width: 170px;
+				&>div {
+					select {
+						width: 150px;
+					}
 				}
-			}	
+			}
 		}
 	}
 }

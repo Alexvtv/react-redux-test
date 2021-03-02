@@ -6,7 +6,7 @@ function SearchPanel() {
   const [searchValue, setSearchValue] = useState('')
 
   return (
-    <div className='search-panel'>
+    <div className='search-panel col-12'>
     	<p>
         <input 
         	value={searchValue} 

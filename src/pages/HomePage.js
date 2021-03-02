@@ -2,9 +2,11 @@ import Nav from '../components/navigation'
 
 function HomePage() {
   return (
-    <div className='app'>
+    <div className='commonPage'>
       <Nav />
-      <h1>Главная</h1>
+      <div className='main'>
+      	<h1>Home page</h1>
+      </div>
     </div>
   )
 }

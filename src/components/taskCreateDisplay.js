@@ -28,35 +28,38 @@ function TaskCreateDisplay(props) {
   		executorGroupId: 0
 		}
 
-		let res = await fetch('http://intravision-task.test01.intravision.ru/api/6581f395-5d65-4960-84f2-2ce6cd6dda13/Tasks', {
-		  method: 'POST',
-		  headers: {
-		    'Content-Type': 'application/json'
-		  },
-		  body: JSON.stringify(body)
-		})
+    if((body.name.length > 0) && (body.description.length > 0)) {
+
+		  let res = await fetch('http://intravision-task.test01.intravision.ru/api/6581f395-5d65-4960-84f2-2ce6cd6dda13/Tasks', {
+		    method: 'POST',
+		    headers: {
+		      'Content-Type': 'application/json'
+		    },
+		    body: JSON.stringify(body)
+		  })
+
     
-    if(res.ok) {  
-      res = await res.json()
-
-      // Обновляем данные заявок, после чего переходим на созданную заявку
-
-      fetch('http://intravision-task.test01.intravision.ru/odata/tasks?tenantguid=6581f395-5d65-4960-84f2-2ce6cd6dda13')
-      .then((response) => {
-        return response.json()
-      })
-      .then((data) => {
-        props.dispatch(loadTasks(data.value))
-      })
-      .then(() => {
-        props.selectTask(res)
-      })
+      if(res.ok) {  
+        res = await res.json()
+  
+        // Обновляем данные заявок, после чего переходим на созданную заявку
+  
+        fetch('http://intravision-task.test01.intravision.ru/odata/tasks?tenantguid=6581f395-5d65-4960-84f2-2ce6cd6dda13')
+        .then((response) => {
+          return response.json()
+        })
+        .then((data) => {
+          props.dispatch(loadTasks(data.value))
+        })
+        .then(() => {
+          props.selectTask(res)
+        })
+      }
     }
-
 	}
 	
   return (
-    <div className='action-task-menu create-task'>
+    <div className='action-task-menu create-task col-12 col-md-7 col-lg-6'>
       <div className='action-task-menu-title'>
       	<p className='title-name'>Новая заявка</p>
       	<img src='/icons/close.png' onClick={() => props.selectTask(null)} />

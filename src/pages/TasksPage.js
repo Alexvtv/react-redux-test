@@ -36,9 +36,9 @@ function TasksPage(props) {
   return (
     <div className='commonPage'>
       <Nav />
-      <div className='main tasks-page'>
+      <div className='main tasks-page row'>
         <SearchPanel />
-      	<div className='tasks-list'>
+      	<div className={selectedId === null ? 'tasks-list col-12' : 'tasks-list col-12 col-md-5 col-xl-6'}>
           <button onClick={() => setSelectedId('new')} className='standart-button'>
             Создать заявку
           </button>
