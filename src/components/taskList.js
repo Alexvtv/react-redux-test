@@ -12,6 +12,7 @@ const TaskList = (props) => {
   const tasks = props.data.tasks.map(task => {
 
     const status = props.data.statuses.find(elem => elem.id === task.statusId)
+    const executor = props.data.users.find(elem => elem.id === task.executorId)
 
     return (
       <div className='col-12 task-unit' key={ task.id } onClick={() => props.selectTask(task.id)}>
@@ -19,7 +20,7 @@ const TaskList = (props) => {
           <div className='col-2 task-id'><div style={{backgroundColor: status.rgb}}></div><p>{ task.id }</p></div>
           <div className='col-5'><p>{ task.name }</p></div>
           { taskStatus(task.statusId) }
-          <div className='col-3'><p>{ task.executorName }</p></div>
+          <div className='col-3'><p>{ executor.name }</p></div>
           <hr className='col-12' />
         </div>
       </div>

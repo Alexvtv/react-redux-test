@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { connect } from "react-redux"
 import { loadTasks } from "../redux/actions"
 
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 import '../styles/actionTaskDisplay.scss'
 
 function TaskCreateDisplay(props) {
@@ -28,8 +30,11 @@ function TaskCreateDisplay(props) {
   		executorGroupId: 0
 		}
 
-    if((body.name.length > 0) && (body.description.length > 0)) {
-
+    if(body.name.length === 0) {
+      toast.error('Название не указано', {autoClose: 2500})
+    } else if(body.description.length === 0) {
+      toast.error('Описание не указано', {autoClose: 2500})
+    } else {
 		  let res = await fetch('http://intravision-task.test01.intravision.ru/api/6581f395-5d65-4960-84f2-2ce6cd6dda13/Tasks', {
 		    method: 'POST',
 		    headers: {
@@ -75,6 +80,7 @@ function TaskCreateDisplay(props) {
       	</div>
       	<button className='standart-button' onClick={createTask}>Сохранить</button>
       </div>
+      <ToastContainer />
     </div>
   )
 }
